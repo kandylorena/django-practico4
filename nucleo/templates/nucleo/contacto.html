@@ -1,0 +1,39 @@
+{% extends "nucleo/base.html" %}
+
+{% block title %}Contacto{% endblock %}
+
+{% block content %}
+    <h2>Formulario de Contacto</h2>
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="errores">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% for field in form %}
+            <div>
+                <p>
+                    {{ field.label_tag }}
+                    {{ field }}
+                </p>
+                {% if field.errors %}
+                    <ul style="color: red;">
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit">Enviar</button>
+    </form>
+
+    <p><a href="{% url 'contacto' %}">Limpiar formulario</a></p>
+{% endblock %}
